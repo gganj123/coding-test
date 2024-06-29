@@ -1,31 +1,34 @@
-const input = require("fs")
+const n = require("fs")
   .readFileSync(process.platform === "linux" ? "/dev/stdin" : "./input.txt")
   .toString()
   .trim()
   .split("\n")
   .map((el) => parseInt(el, 10));
 
-let count0 = 0;
-let count1 = 0;
+function solution(n) {
+  var cur = n.toString(2).split("");
+  var next = 0;
+  for (s = 1; s < 1000; s++) {
+    next = (Number(n) + s).toString(2).split("");
+    if (
+      Number(cur.join(""))
+        .toString(2)
+        .split("")
+        .filter((e) => e === "1").length ===
+      Number(next.join(""))
+        .toString(2)
+        .split("")
+        .filter((e) => e === "1").length
+    ) {
+      console.log(parseInt(next.join(""), 2));
+      console.log(cur.filter((e) => e === "1").length);
+      console.log(Number(cur.join("")).toString(2));
 
-function fibonacci(n) {
-  if (n === 0) {
-    count0++;
-    return 0;
-  } else if (n === 1) {
-    count1++;
-    return 1;
-  } else {
-    return fibonacci(n - 1) + fibonacci(n - 2);
+      return parseInt(next.join(""));
+    }
   }
+  console.log(parseInt(next.join(""), 2));
+  return;
 }
 
-input.forEach((num) => {
-  count0 = 0;
-  count1 = 0;
-  fibonacci(num);
-  //   console.log(`0 count : ${count0}`);
-  //   console.log(`1 count : ${count1}`);
-  console.log(count0, count1);
-  //   console.log(fibonacci(num));
-});
+solution(n);
