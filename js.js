@@ -2,30 +2,32 @@ const input = require("fs")
   .readFileSync(process.platform === "linux" ? "/dev/stdin" : "./input.txt")
   .toString()
   .trim()
-  .split("\n")
-  .map((el) => parseInt(el, 10));
+  .split("\n");
 
-let count0 = 0;
-let count1 = 0;
+function isVPS(n) {
+  let countOpen = 0;
+  let countClose = 0;
 
-function fibonacci(n) {
-  if (n === 0) {
-    count0++;
-    return 0;
-  } else if (n === 1) {
-    count1++;
-    return 1;
-  } else {
-    return fibonacci(n - 1) + fibonacci(n - 2);
+  for (let i = 0; i < n.length; i++) {
+    if (n[i] === "(") {
+      countOpen++;
+    } else if (n[i] === ")") {
+      countClose++;
+    }
+
+    // 중간에 ')'가 '('보다 많아지는 경우 false
+    if (countClose > countOpen) {
+      return false;
+    }
   }
+
+  return countOpen === countClose;
 }
 
-input.forEach((num) => {
-  count0 = 0;
-  count1 = 0;
-  fibonacci(num);
-  //   console.log(`0 count : ${count0}`);
-  //   console.log(`1 count : ${count1}`);
-  console.log(count0, count1);
-  //   console.log(fibonacci(num));
-});
+for (let i = 0; i < input.length; i++) {
+  if (isVPS(input[i])) {
+    console.log("YES");
+  } else {
+    console.log("NO");
+  }
+}
