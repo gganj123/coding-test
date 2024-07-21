@@ -1,4 +1,5 @@
 function solution(numbers) {
-  var answer = 0;
+  var answer = numbers.split("");
+
   return answer;
 }
